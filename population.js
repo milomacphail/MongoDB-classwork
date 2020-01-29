@@ -4,7 +4,6 @@ mongoose.connect('mongodb+srv://milomacphail:Pandahead7!@cluster0-xmzff.gcp.mong
     .then(() => console.log("Connected"))
     .catch(err => console.error("Couldn't connect", err));
 
-
 const Author = mongoose.model('Author', new mongoose.Schema({
   name: String,
   bio: String,
@@ -13,6 +12,10 @@ const Author = mongoose.model('Author', new mongoose.Schema({
 
 const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Author'
+  }
 }));
 
 async function createAuthor(name, bio, website) { 
@@ -39,12 +42,13 @@ async function createCourse(name, author) {
 async function listCourses() { 
   const courses = await Course
     .find()
-    .select('name');
+    .populate('author', 'name -_id')
+    .select('name author');
   console.log(courses);
 }
 
-createAuthor('Mosh', 'My bio', 'My Website');
+//createAuthor('Mosh', 'My bio', 'My Website');
 
-// createCourse('Node Course', 'authorId')
+//createCourse('Node Course', '5e305e1fd14bb323ccf87f2f');
 
-// listCourses();
+listCourses();
