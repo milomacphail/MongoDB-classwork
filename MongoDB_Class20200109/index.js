@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://MiloMacPhail:careerDev5!@cluster0-uefxk.mongodb.net/test?retryWrites=true&w=majority')
-    .then(() => console.log("Connected"))
-    .catch(err => console.error("Couldn't connect", err));
-
-
 const courseSchema = new mongoose.Schema({
     name: {
         type: String,
